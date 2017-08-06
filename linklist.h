@@ -45,7 +45,7 @@ typedef linklist_t * linklist_handler_t;
 extern OSStatus linklist_init(linklist_handler_t * linklist_handler);
 extern OSStatus linklist_push(linklist_handler_t * linklist_handler, push_dir_t dir, data_t * data, datasize_t size);
 extern OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp, data_t * data_len);
-extern OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, uint8_t * nodeSize);
+extern OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, nodesize_t * nodeSize);
 extern OSStatus linklist_node_find(linklist_handler_t * linklist_handler, uint32_t i, linklist * * dest_node);
 extern OSStatus linklist_node_delete(linklist_handler_t * linklist_handler, uint32_t i);
 extern OSStatus linklist_empty(linklist_handler_t * linklist_handler);

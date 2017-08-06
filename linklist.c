@@ -159,7 +159,7 @@ OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp,
 }
 
 //llinklist get node size
-OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, uint8_t * nodeSize)
+OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, nodesize_t * nodeSize)
 {
     OSStatus err = kNoErr;
 
