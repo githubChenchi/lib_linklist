@@ -6,6 +6,6 @@
 
 int main(void)
 {
-	test_push_delete();
+	test_push_empty();
 	return 0;
 }
