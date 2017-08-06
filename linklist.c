@@ -108,7 +108,7 @@ OSStatus linklist_push(linklist_handler_t * linklist_handler, push_dir_t dir, da
 
 
 //pop from head
-OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp)
+OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp, data_t * data_len)
 {
     OSStatus err = kNoErr;
 
@@ -135,8 +135,9 @@ OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp)
 
     if((*linklist_handler)->header->next)   //node exsit
     {    
-		*data_pp = malloc((*linklist_handler)->header->next->size);
-		memcpy(*data_pp, (*linklist_handler)->header->next->data, (*linklist_handler)->header->next->size);
+		*data_len = (*linklist_handler)->header->next->size;
+        *data_pp = malloc(*data_len);
+		memcpy(*data_pp, (*linklist_handler)->header->next->data, *data_len);
 
 		linklist * temp_node = (*linklist_handler)->header->next;
 
@@ -157,6 +158,39 @@ OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp)
     return err;
 }
 
+//llinklist get node size
+OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, uint8_t * nodeSize)
+{
+    OSStatus err = kNoErr;
+
+    if(! linklist_handler)
+    {
+		err = kGeneralErr;
+        sys_log("para can not be NULL");
+		goto exit;
+    }    
+
+    if(! *linklist_handler)
+    {
+		err = kGeneralErr;
+        sys_log("invalid linklist handler");
+		goto exit;
+    }
+
+    if(! nodeSize)
+    {
+		err = kGeneralErr;
+        sys_log("para can not be NULL");
+		goto exit;
+    }
+    
+    *nodeSize = (*linklist_handler)->node_size;
+
+	exit:
+    return err;
+}
+
+//linklist node find
 OSStatus linklist_node_find(linklist_handler_t * linklist_handler, uint32_t i, linklist * * dest_node)
 {
     OSStatus err = kNoErr;
@@ -268,10 +302,42 @@ OSStatus linklist_node_delete(linklist_handler_t * linklist_handler, uint32_t i)
     return err;
 }
 
+//linklist empty
+OSStatus linklist_empty(linklist_handler_t * linklist_handler)
+{
+    OSStatus err = kNoErr;
+    nodesize_t node_num = 0;
+
+    if(! linklist_handler)
+    {
+        err = kGeneralErr;
+		sys_log("para can not be NULL");
+		goto exit;
+    }    
+
+    if(! *linklist_handler)
+    {
+        err = kGeneralErr;
+		sys_log("invalid linklist handler");
+		goto exit;
+    }
+    
+    node_num = (*linklist_handler)->node_size;
+
+    for(int i=0; i<node_num; i++)
+    {
+        linklist_node_delete(linklist_handler, 0);
+    }
+
+	exit:
+    return err;
+}
+
 //linklist deinit
 OSStatus linklist_deinit(linklist_handler_t * linklist_handler)
 {
     OSStatus err = kNoErr;
+    nodesize_t node_num = 0;
 
     if(! linklist_handler)
     {
@@ -287,13 +353,17 @@ OSStatus linklist_deinit(linklist_handler_t * linklist_handler)
 		goto exit;
     }
 
-    for(int i=0; i<(*linklist_handler)->node_size; i++)
+    err = linklist_empty(linklist_handler);
+    if(err != kNoErr)
     {
-        linklist_node_delete(linklist_handler, 0);
+        err = kGeneralErr;
+		sys_log("linklist empty fail");
+		goto exit;
     }
 
     memset(*linklist_handler, 0, sizeof(linklist_t));
     free(*linklist_handler);
+    * linklist_handler = NULL;
 
 	exit:
     return err;
