@@ -108,7 +108,7 @@ OSStatus linklist_push(linklist_handler_t * linklist_handler, push_dir_t dir, da
 
 
 //pop from head
-OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp, data_t * data_len)
+OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp, datasize_t * data_len)
 {
     OSStatus err = kNoErr;
 
