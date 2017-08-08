@@ -69,7 +69,9 @@
 
 ## 4. API  
 
-### &emsp;&emsp;4.1 `OSStatus linklist_init(linklist_handler_t * linklist_handler)`  
+### &emsp;&emsp;4.1 创建链表  
+
+### `OSStatus linklist_init(linklist_handler_t * linklist_handler)`  
 
 #### &emsp;&emsp;参数  
 
@@ -79,7 +81,9 @@
 
 		链表创建的操作结果，kNoErr，成功，kGeneralErr，失败  
 
-### &emsp;&emsp;4.2 `OSStatus linklist_push(linklist_handler_t * linklist_handler, push_dir_t dir, data_t * data, datasize_t size)`  
+### &emsp;&emsp;4.2 数据入栈  
+
+### `OSStatus linklist_push(linklist_handler_t * linklist_handler, push_dir_t dir, data_t * data, datasize_t size)`  
 
 #### &emsp;&emsp;参数  
 	
@@ -91,7 +95,9 @@
 
 		链表节点压栈的操作结果，kNoErr，成功，kGeneralErr，失败  
 
-### &emsp;&emsp;4.3 `OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp)`  
+### &emsp;&emsp;4.3 数据出栈  
+
+### `OSStatus linklist_pop(linklist_handler_t * linklist_handler, data_t * * data_pp)`  
 
 #### &emsp;&emsp;参数  
 	
@@ -104,7 +110,9 @@
 
 ### &emsp;&emsp;【注意】 执行pop操作后，该节点中的有效数据拷贝到`(*data_pp)`后，从链表中删除，数据不再使用之后，应该执行`free(*data_pp)`操作，释放内存空间。  
  
-### &emsp;&emsp;4.4 `OSStatus linklist_node_find(linklist_handler_t * linklist_handler, uint32_t i, linklist * * dest_node)`  
+### &emsp;&emsp;4.4 查找链表节点  
+
+### `OSStatus linklist_node_find(linklist_handler_t * linklist_handler, uint32_t i, linklist * * dest_node)`  
 
 #### &emsp;&emsp;参数  
 	
@@ -116,7 +124,9 @@
 
 		链表节点查找的操作结果，kNoErr，成功，kGeneralErr，失败  
 
-### &emsp;&emsp;4.5 `OSStatus linklist_node_delete(linklist_handler_t * linklist_handler, uint32_t i)`    
+### &emsp;&emsp;4.5 删除链表节点  
+
+### `OSStatus linklist_node_delete(linklist_handler_t * linklist_handler, uint32_t i)`    
 
 #### &emsp;&emsp;参数  
 	
@@ -127,7 +137,34 @@
 
 		链表节点删除的操作结果，kNoErr，成功，kGeneralErr，失败  
 
-### &emsp;&emsp;4.6 `OSStatus linklist_deinit(linklist_handler_t * linklist_handler)`   
+### &emsp;&emsp;4.6 删除链表  
+
+### `OSStatus linklist_deinit(linklist_handler_t * linklist_handler)`   
+
+#### &emsp;&emsp;参数  
+	
+		linklist_handler : 链表控制块的句柄指针  
+
+#### &emsp;&emsp;返回值  
+
+		链表删除的操作结果，kNoErr，成功，kGeneralErr，失败  
+
+### &emsp;&emsp;4.7 获取链表节点数  
+
+### `OSStatus linklist_get_nodeSize(linklist_handler_t * linklist_handler, nodesize_t * nodeSize)`   
+
+#### &emsp;&emsp;参数  
+	
+		linklist_handler : 链表控制块的句柄指针  
+		nodeSize : 存储链表节点数目的指针
+
+#### &emsp;&emsp;返回值  
+
+		链表删除的操作结果，kNoErr，成功，kGeneralErr，失败  
+
+### &emsp;&emsp;4.8 清空链表节点  
+
+### `OSStatus linklist_empty(linklist_handler_t * linklist_handler)`   
 
 #### &emsp;&emsp;参数  
 	
